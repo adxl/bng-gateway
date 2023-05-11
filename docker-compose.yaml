@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  gateway:
+    container_name: bng_gateway
+    image: node:18-alpine
+    user: node
+    working_dir: /home/node
+    env_file: .env
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/home/node
+    command: /bin/sh -c "npm i && npm run start:dev"
+    networks:
+      - bng
+
+networks:
+  bng:
+    external: true
+ 
