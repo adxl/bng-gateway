@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  gateway:
+    image: adxl/bng-gateway:latest
+    ports:
+      - 9000:9000
+    deploy:
+      replicas: 3

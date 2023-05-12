@@ -1,14 +1,15 @@
-version: "3"
+version: '3'
 
 services:
   gateway:
     container_name: bng_gateway
-    image: node:18-alpine
-    user: node
-    working_dir: /home/node
-    env_file: .env
+    build:
+      context: docker/api
+      target: development
     ports:
       - 9000:9000
+    environment:
+      STAGE: local
     volumes:
       - .:/home/node
     command: /bin/sh -c "npm i && npm run start:dev"
@@ -18,4 +19,3 @@ services:
 networks:
   bng:
     external: true
- 

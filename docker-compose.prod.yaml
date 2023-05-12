@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  gateway:
+    image: adxl/bng-gateway:latest
+    build:
+      context: .
+      target: production
