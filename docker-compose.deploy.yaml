@@ -5,6 +5,8 @@ services:
     image: adxl/bng-gateway:latest
     ports:
       - 80:9000
+    environment:
+      STAGE: production
     networks:
       - default
     deploy:
