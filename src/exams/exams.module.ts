@@ -10,7 +10,7 @@ import { ExamsController } from './exams.controller';
         name: EXAMS_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: 'bng_api_exams',
+          host: 'exams-api-service',
           port: 9000,
         },
       },

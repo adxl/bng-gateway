@@ -1,9 +1,15 @@
 version: '3'
 
 services:
-  gateway:
+  gateway-service:
     image: adxl/bng-gateway:latest
     ports:
       - 9000:9000
+    networks:
+      - default
     deploy:
       replicas: 3
+
+networks:
+  bng:
+    external: true

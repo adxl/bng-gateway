@@ -10,7 +10,7 @@ import { AuthController } from './auth.controller';
         name: AUTH_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: 'bng_api_auth',
+          host: 'auth-api-service',
           port: 9000,
         },
       },

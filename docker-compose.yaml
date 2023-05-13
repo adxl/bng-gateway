@@ -1,10 +1,9 @@
 version: '3'
 
 services:
-  gateway:
-    container_name: bng_gateway
+  gateway-service:
     build:
-      context: docker/api
+      context: .
       target: development
     ports:
       - 9000:9000

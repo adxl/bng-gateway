@@ -10,7 +10,7 @@ import { EventsController } from './events.controller';
         name: EVENTS_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: 'bng_api_events',
+          host: 'events-api-service',
           port: 9000,
         },
       },

@@ -10,7 +10,7 @@ import { GearsController } from './gears.controller';
         name: GEARS_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: 'bng_api_gears',
+          host: 'gears-api-service',
           port: 9000,
         },
       },
