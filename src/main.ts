@@ -6,10 +6,7 @@ import * as compression from 'compression';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: [
-      'error',
-      ...(process.env.STAGE === 'local' ? ['warn', 'debug', 'log'] : []),
-    ] as LogLevel[],
+    logger: ['error', 'warn', 'debug', 'log'] as LogLevel[],
   });
 
   app.enableCors({
