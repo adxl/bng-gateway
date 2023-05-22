@@ -1,8 +1,7 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { AUTH_SERVICE } from 'src/constants';
-import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
+import { AbstractBody } from 'src/types';
 
 @Controller('auth')
 export class AuthController {
@@ -16,12 +15,12 @@ export class AuthController {
   }
 
   @Post('/register')
-  public register(@Body() data: RegisterDto) {
-    return this.authProxy.send('register', data);
+  public register(@Body() body: AbstractBody) {
+    return this.authProxy.send('register', body);
   }
 
   @Post('/login')
-  public login(@Body() data: LoginDto) {
-    return this.authProxy.send('login', data);
+  public login(@Body() body: AbstractBody) {
+    return this.authProxy.send('login', body);
   }
 }
