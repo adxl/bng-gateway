@@ -1,6 +1,7 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { EVENTS_SERVICE } from 'src/constants';
+import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
 @Controller('events')
 export class EventsController {
@@ -10,6 +11,6 @@ export class EventsController {
 
   @Get()
   public index() {
-    return this.eventsProxy.send('index', {});
+    return this.eventsProxy.send('index', {}).pipe(catchRpcException);
   }
 }
