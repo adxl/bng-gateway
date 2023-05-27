@@ -1,8 +1,8 @@
 import { LogLevel, ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import * as compression from 'compression';
 import { AppModule } from './app.module';
 import { initSwagger } from './config/swagger.config';
-import * as compression from 'compression';
 import { RpcExceptionFilter } from './exceptions/exceptions.filter';
 
 async function bootstrap() {
