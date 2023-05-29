@@ -1,14 +1,38 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpStatus,
+} from '@nestjs/common';
+import { HttpAdapterHost } from '@nestjs/core';
 import { RpcException } from '@nestjs/microservices';
-import { Response } from 'express';
 
-@Catch(RpcException)
+type ExceptionBody = {
+  timestamp: string;
+  statusCode: number;
+  message: string;
+};
+
+@Catch()
 export class RpcExceptionFilter implements ExceptionFilter {
-  catch(exception: RpcException, host: ArgumentsHost) {
-    const error: any = exception.getError();
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
+  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
 
-    response.status(error.statusCode).json(error);
+  catch(exception: RpcException, host: ArgumentsHost) {
+    const context = host.switchToHttp();
+    const { httpAdapter } = this.httpAdapterHost;
+
+    const body: Partial<ExceptionBody> = {
+      timestamp: new Date().toISOString(),
+      statusCode: HttpStatus.SERVICE_UNAVAILABLE,
+      message: 'Internal Server Error ❌',
+    };
+
+    if (exception instanceof RpcException) {
+      const error: any = exception.getError();
+      body.statusCode = error?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+      body.message = error?.message || 'Internal Server Error 💀';
+    }
+
+    httpAdapter.reply(context.getResponse(), body, body.statusCode);
   }
 }
