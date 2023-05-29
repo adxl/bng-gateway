@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { initSwagger } from './config/swagger.config';
 import * as compression from 'compression';
-import { RpcExceptionFilter } from './filters/exceptions.filter';
+import { RpcExceptionFilter } from './exceptions/exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
