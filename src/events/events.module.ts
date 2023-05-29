@@ -10,8 +10,8 @@ import { EventsController } from './events.controller';
         name: EVENTS_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: 'events-api-service',
-          port: 9000,
+          host: process.env.EVENTS_HOST || 'events-api-service',
+          port: Number(process.env.EVENTS_PORT) || 9000,
         },
       },
     ]),

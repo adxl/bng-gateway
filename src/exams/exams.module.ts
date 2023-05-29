@@ -10,8 +10,8 @@ import { ExamsController } from './exams.controller';
         name: EXAMS_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: 'exams-api-service',
-          port: 9000,
+          host: process.env.EXAMS_HOST || 'exams-api-service',
+          port: Number(process.env.EXAMS_PORT) || 9000,
         },
       },
     ]),

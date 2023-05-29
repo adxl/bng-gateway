@@ -1,5 +1,5 @@
 import { LogLevel, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { initSwagger } from './config/swagger.config';
 import * as compression from 'compression';
@@ -16,12 +16,12 @@ async function bootstrap() {
 
   initSwagger(app);
 
-  app.useGlobalFilters(new RpcExceptionFilter());
-
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.use(compression());
 
-  await app.listen(9000);
+  app.useGlobalFilters(new RpcExceptionFilter(app.get(HttpAdapterHost)));
+
+  await app.listen(process.env.PORT || 9000);
 }
 
 bootstrap();

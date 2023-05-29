@@ -10,8 +10,8 @@ import { AuthController } from './auth.controller';
         name: AUTH_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: 'auth-api-service',
-          port: 9000,
+          host: process.env.AUTH_HOST || 'auth-api-service',
+          port: Number(process.env.AUTH_PORT) || 9000,
         },
       },
     ]),

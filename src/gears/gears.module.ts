@@ -10,8 +10,8 @@ import { GearsController } from './gears.controller';
         name: GEARS_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: 'gears-api-service',
-          port: 9000,
+          host: process.env.GEARS_HOST || 'gears-api-service',
+          port: Number(process.env.GEARS_PORT) || 9000,
         },
       },
     ]),
