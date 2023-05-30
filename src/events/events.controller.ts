@@ -13,4 +13,9 @@ export class EventsController {
   public index() {
     return this.eventsProxy.send('index', {}).pipe(catchRpcException);
   }
+
+  @Get('/kill')
+  public kill() {
+    return this.eventsProxy.send('kill', {}).pipe(catchRpcException);
+  }
 }

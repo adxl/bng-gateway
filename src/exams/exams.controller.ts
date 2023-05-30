@@ -13,4 +13,9 @@ export class ExamsController {
   public index() {
     return this.examsProxy.send('index', {}).pipe(catchRpcException);
   }
+
+  @Get('/kill')
+  public kill() {
+    return this.examsProxy.send('kill', {}).pipe(catchRpcException);
+  }
 }

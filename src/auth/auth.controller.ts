@@ -15,6 +15,11 @@ export class AuthController {
     return this.authProxy.send('index', {}).pipe(catchRpcException);
   }
 
+  @Get('/kill')
+  public kill() {
+    return this.authProxy.send('kill', {}).pipe(catchRpcException);
+  }
+
   @Post('/register')
   public register(@Body() body: AbstractBody) {
     return this.authProxy.send('register', body).pipe(catchRpcException);

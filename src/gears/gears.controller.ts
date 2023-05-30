@@ -13,4 +13,9 @@ export class GearsController {
   public index() {
     return this.gearsProxy.send('index', {}).pipe(catchRpcException);
   }
+
+  @Get('/kill')
+  public kill() {
+    return this.gearsProxy.send('kill', {}).pipe(catchRpcException);
+  }
 }
