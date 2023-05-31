@@ -9,7 +9,11 @@ import { AppController } from './app.controller';
 
 @Module({
   imports: [
-    ClientProxy(EXAMS_SERVICE, 'exams-api-service'),
+    ClientProxy(
+      EXAMS_SERVICE,
+      process.env.EXAMS_HOST || 'exams-api-service',
+      process.env.EXAMS_PORT,
+    ),
     ExamsModule,
     AttemptsModule,
     QuestionsModule,

@@ -4,7 +4,13 @@ import { EXAMS_SERVICE } from 'src/constants';
 import { AttemptsController } from './attempts.controller';
 
 @Module({
-  imports: [ClientProxy(EXAMS_SERVICE, 'exams-api-service')],
+  imports: [
+    ClientProxy(
+      EXAMS_SERVICE,
+      process.env.EXAMS_HOST || 'exams-api-service',
+      process.env.EXAMS_PORT,
+    ),
+  ],
   controllers: [AttemptsController],
 })
 export class AttemptsModule {}
