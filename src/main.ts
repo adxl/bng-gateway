@@ -11,7 +11,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: [/localhost/, /\.vercel\.app$/],
+    origin: [/localhost/, /\.vercel\.app$/, /www.drivequeen.eu/],
   });
 
   initSwagger(app);
