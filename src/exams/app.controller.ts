@@ -5,12 +5,15 @@ import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
 @Controller('exams')
 export class AppController {
-  public constructor(
-    @Inject(EXAMS_SERVICE) private readonly examsProxy: ClientProxy,
-  ) {}
+  public constructor(@Inject(EXAMS_SERVICE) private readonly examsProxy: ClientProxy) {}
 
   @Get()
   public index() {
     return this.examsProxy.send('index', {}).pipe(catchRpcException);
+  }
+
+  @Get('/kill')
+  public kill() {
+    return this.examsProxy.send('kill', {}).pipe(catchRpcException);
   }
 }

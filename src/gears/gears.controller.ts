@@ -5,9 +5,7 @@ import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
 @Controller('gears')
 export class GearsController {
-  public constructor(
-    @Inject(GEARS_SERVICE) private readonly gearsProxy: ClientProxy,
-  ) {}
+  public constructor(@Inject(GEARS_SERVICE) private readonly gearsProxy: ClientProxy) {}
 
   @Get()
   public index() {
