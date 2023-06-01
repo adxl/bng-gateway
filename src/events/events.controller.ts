@@ -5,9 +5,7 @@ import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
 @Controller('events')
 export class EventsController {
-  public constructor(
-    @Inject(EVENTS_SERVICE) private readonly eventsProxy: ClientProxy,
-  ) {}
+  public constructor(@Inject(EVENTS_SERVICE) private readonly eventsProxy: ClientProxy) {}
 
   @Get()
   public index() {

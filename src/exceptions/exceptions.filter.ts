@@ -1,11 +1,4 @@
-import {
-  ArgumentsHost,
-  Catch,
-  ExceptionFilter,
-  HttpException,
-  HttpStatus,
-  Logger,
-} from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { RpcException } from '@nestjs/microservices';
 
@@ -32,8 +25,7 @@ export class RpcExceptionFilter implements ExceptionFilter {
     };
 
     if (exception instanceof HttpException) {
-      body.statusCode =
-        exception.getStatus() || HttpStatus.INTERNAL_SERVER_ERROR;
+      body.statusCode = exception.getStatus() || HttpStatus.INTERNAL_SERVER_ERROR;
       body.message = exception.message || 'Gateway Internal Server Error 💀';
     }
 
@@ -44,7 +36,6 @@ export class RpcExceptionFilter implements ExceptionFilter {
     }
 
     this.logger.error({ message: body.message, exception: exception || null });
-    console.debug(exception as RpcException);
 
     httpAdapter.reply(context.getResponse(), body, body.statusCode);
   }

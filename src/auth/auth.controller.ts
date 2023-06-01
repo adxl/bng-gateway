@@ -6,9 +6,7 @@ import { AbstractBody } from 'src/types';
 
 @Controller('auth')
 export class AuthController {
-  public constructor(
-    @Inject(AUTH_SERVICE) private readonly authProxy: ClientProxy,
-  ) {}
+  public constructor(@Inject(AUTH_SERVICE) private readonly authProxy: ClientProxy) {}
 
   @Get()
   public index() {

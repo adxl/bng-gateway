@@ -4,10 +4,8 @@ import { EXAMS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
 @Controller('exams')
-export class ExamsController {
-  public constructor(
-    @Inject(EXAMS_SERVICE) private readonly examsProxy: ClientProxy,
-  ) {}
+export class AppController {
+  public constructor(@Inject(EXAMS_SERVICE) private readonly examsProxy: ClientProxy) {}
 
   @Get()
   public index() {
