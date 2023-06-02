@@ -11,4 +11,9 @@ export class AppController {
   public index() {
     return this.authProxy.send('index', {}).pipe(catchRpcException);
   }
+
+  @Get('/kill')
+  public kill() {
+    return this.authProxy.send('kill', {}).pipe(catchRpcException);
+  }
 }

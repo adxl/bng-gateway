@@ -9,42 +9,44 @@ export class UsersController {
   public constructor(@Inject(AUTH_SERVICE) private readonly authProxy: ClientProxy) {}
 
   @Get('')
-  public findAll(@Headers() headers) {
-    const token = headers.authorization;
-    return this.authProxy.send('users.findAll', token).pipe(catchRpcException);
+  public findAll(@Headers('authorization') token: string) {
+    return this.authProxy.send('users.findAll', { token }).pipe(catchRpcException);
   }
 
   @Get('/:id')
-  public findOne(@Param('id', new ParseUUIDPipe()) id: string, @Headers() headers) {
-    return this.authProxy.send('users.findOne', { id, token: headers.authorization }).pipe(catchRpcException);
+  public findOne(@Param('id', new ParseUUIDPipe()) id: string, @Headers('authorization') token: string) {
+    return this.authProxy.send('users.findOne', { id, token }).pipe(catchRpcException);
   }
 
   @Patch('/:id/password')
-  public updatePassword(@Body() body: AbstractBody, @Headers() headers) {
+  public updatePassword(@Body() body: AbstractBody, @Headers('authorization') token: string) {
     return this.authProxy.send('users.updatePassword', {
       oldPwd: body.oldPwd,
       newPwd: body.newPwd,
-      token: headers.authorization,
+      token,
     });
   }
 
   @Patch('/:id/profile')
-  public updateProfile(@Body() body: AbstractBody, @Headers() headers) {
-    console.log(body);
+  public updateProfile(@Body() body: AbstractBody, @Headers('authorization') token: string) {
     return this.authProxy.send('users.updateProfile', {
       firstName: body.firstName,
       lastName: body.lastName,
-      token: headers.authorization,
+      token,
     });
   }
 
   @Patch('/:id/role')
-  public updateRole(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: AbstractBody, @Headers() headers) {
+  public updateRole(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() body: AbstractBody,
+    @Headers('authorization') token: string,
+  ) {
     return this.authProxy
       .send('users.updateRole', {
         id: id,
         role: body.role,
-        token: headers.authorization,
+        token,
       })
       .pipe(catchRpcException);
   }
