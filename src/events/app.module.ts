@@ -1,21 +1,14 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { EVENTS_SERVICE } from 'src/constants';
-import { securityMiddleware } from 'src/middlewares/security.middleware';
 import { AppController } from './app.controller';
+import { EventsModule } from 'src/events/events/events.module';
+import { ClientProxy } from 'src/config/proxy.config';
+import { securityMiddleware } from 'src/middlewares/security.middleware';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: EVENTS_SERVICE,
-        transport: Transport.TCP,
-        options: {
-          host: process.env.EVENTS_HOST || 'events-api-service',
-          port: Number(process.env.EVENTS_PORT) || 9000,
-        },
-      },
-    ]),
+    ClientProxy(EVENTS_SERVICE, process.env.EVENTS_HOST || 'events-api-service', process.env.EVENTS_PORT),
+    EventsModule,
   ],
   controllers: [AppController],
 })
