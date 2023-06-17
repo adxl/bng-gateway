@@ -1,5 +1,20 @@
-import { Body, Controller, Delete, Get, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  FileTypeValidator,
+  Get,
+  Inject,
+  Param,
+  ParseFilePipe,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { GEARS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 import { AbstractBody } from 'src/types';
@@ -15,6 +30,8 @@ export class VehiclesSkinsController {
 
   @Get(':id')
   public findOne(@Param('id', ParseUUIDPipe) id: string) {
+    console.log(id);
+
     return this.gearsProxy.send('vehiclesSkins.findOne', id).pipe(catchRpcException);
   }
 
@@ -26,6 +43,20 @@ export class VehiclesSkinsController {
   @Patch(':id')
   public update(@Param('id', ParseUUIDPipe) id: string, @Body() body: AbstractBody) {
     return this.gearsProxy.send('vehiclesSkins.update', { id, body }).pipe(catchRpcException);
+  }
+
+  @Patch(':id/file')
+  @UseInterceptors(FileInterceptor('file'))
+  public uploadFile(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: /(^image)(\/)(jpe?g|png)/g })],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.gearsProxy.send('vehiclesSkins.uploadFile', { id, file }).pipe(catchRpcException);
   }
 
   @Delete(':id')
