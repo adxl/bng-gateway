@@ -4,7 +4,7 @@ import { GEARS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
 @Controller('gears')
-export class GearsController {
+export class AppController {
   public constructor(@Inject(GEARS_SERVICE) private readonly gearsProxy: ClientProxy) {}
 
   @Get()
