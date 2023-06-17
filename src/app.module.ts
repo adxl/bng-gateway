@@ -6,7 +6,7 @@ import { AppModule as ExamsModule } from './exams/app.module';
 import { AppModule as GearsModule } from './gears/app.module';
 
 @Module({
-  imports: [AuthModule, ExamsModule, EventsModule, GearsModule, VehicleSkinModule],
+  imports: [AuthModule, ExamsModule, EventsModule, GearsModule],
   controllers: [AppController],
 })
 export class AppModule {}
