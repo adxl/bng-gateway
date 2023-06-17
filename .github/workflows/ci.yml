@@ -2,6 +2,10 @@ name: Gateway CI
 
 on:
   push:
+    branches:
+     - "*/*"
+     - "master"
+
   workflow_dispatch:
 
 jobs:
