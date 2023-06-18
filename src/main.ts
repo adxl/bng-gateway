@@ -18,7 +18,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(new RpcExceptionFilter(app.get(HttpAdapterHost)));
 
-  await app.listen(process.env.PORT || 9000);
+  await app.listen(process.env.PORT || 9000); //
 }
 
 bootstrap();

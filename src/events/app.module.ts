@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { EVENTS_SERVICE } from 'src/constants';
-import { EventsController } from './events.controller';
+import { securityMiddleware } from 'src/middlewares/security.middleware';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { EventsController } from './events.controller';
       },
     ]),
   ],
-  controllers: [EventsController],
+  controllers: [AppController],
 })
-export class EventsModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(securityMiddleware).forRoutes(AppController);
+  }
+}

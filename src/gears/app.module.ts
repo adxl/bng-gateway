@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ClientProxy } from 'src/config/proxy.config';
 import { GEARS_SERVICE } from 'src/constants';
+import { securityMiddleware } from 'src/middlewares/security.middleware';
 import { AppController } from './app.controller';
 import { ReportsModule } from './reports/reports.module';
 import { RidesModule } from './rides/rides.module';
@@ -21,4 +22,8 @@ import { VehiclesModule } from './vehicles/vehicles.module';
   ],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(securityMiddleware).forRoutes(AppController);
+  }
+}

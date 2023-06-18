@@ -4,7 +4,7 @@ import { EVENTS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
 @Controller('events')
-export class EventsController {
+export class AppController {
   public constructor(@Inject(EVENTS_SERVICE) private readonly eventsProxy: ClientProxy) {}
 
   @Get()

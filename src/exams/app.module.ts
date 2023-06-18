@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ClientProxy } from 'src/config/proxy.config';
 import { EXAMS_SERVICE } from 'src/constants';
 import { AnswersModule } from 'src/exams/answers/answers.module';
 import { AttemptsModule } from 'src/exams/attempts/attempts.module';
 import { ExamsModule } from 'src/exams/exams/exams.module';
 import { QuestionsModule } from 'src/exams/questions/questions.module';
+import { securityMiddleware } from 'src/middlewares/security.middleware';
 import { AppController } from './app.controller';
 
 @Module({
@@ -17,4 +18,8 @@ import { AppController } from './app.controller';
   ],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(securityMiddleware).forRoutes(AppController);
+  }
+}
