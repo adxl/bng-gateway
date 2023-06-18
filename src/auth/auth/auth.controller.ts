@@ -4,7 +4,7 @@ import { AUTH_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 import { AbstractBody } from 'src/types';
 
-@Controller('auth')
+@Controller('auth/account')
 export class AuthController {
   public constructor(@Inject(AUTH_SERVICE) private readonly authProxy: ClientProxy) {}
 

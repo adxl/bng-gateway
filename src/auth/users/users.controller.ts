@@ -4,13 +4,17 @@ import { AUTH_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 import { AbstractBody } from 'src/types';
 
-@Controller('users')
+@Controller('auth/users')
 export class UsersController {
   public constructor(@Inject(AUTH_SERVICE) private readonly authProxy: ClientProxy) {}
 
   @Get('')
-  public findAll(@Headers('authorization') token: string) {
-    return this.authProxy.send('users.findAll', { token }).pipe(catchRpcException);
+  public findAll(/* @Headers('authorization') token: string*/) {
+    return this.authProxy
+      .send('users.findAll', {
+        /* token */
+      })
+      .pipe(catchRpcException);
   }
 
   @Get('/:id')
