@@ -22,7 +22,7 @@ export class UsersController {
   public updatePassword(@Body() body: AbstractBody, @Headers('authorization') token: string) {
     return this.authProxy.send('users.updatePassword', {
       oldPwd: body.oldPwd,
-      newPwd: body.newPwd,
+      password: body.password,
       jwt: { token },
     });
   }
