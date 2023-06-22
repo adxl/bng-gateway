@@ -4,7 +4,7 @@ import { EXAMS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 import { AbstractBody } from 'src/types';
 
-@Controller('exams/attempts')
+@Controller('exams/answers')
 export class AnswersController {
   public constructor(@Inject(EXAMS_SERVICE) private readonly answersProxy: ClientProxy) {}
 
