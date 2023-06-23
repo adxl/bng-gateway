@@ -32,4 +32,9 @@ export class EventsWinnersController {
   public remove(@Param('event', ParseUUIDPipe) event: string, @Body() body: AbstractBody) {
     return this.eventsProxy.send('eventsWinners.remove', { event, body }).pipe(catchRpcException);
   }
+
+  @Get('user/:id')
+  public getByUser(@Param('id', ParseUUIDPipe) id: string) {
+    return this.eventsProxy.send('eventsWinners.getByUser', id).pipe(catchRpcException);
+  }
 }
