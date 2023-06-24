@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Headers, Inject, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { AUTH_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
@@ -16,6 +16,13 @@ export class UsersController {
   @Get('/:id')
   public findOne(@Param('id', new ParseUUIDPipe()) id: string, @Headers('authorization') token: string) {
     return this.authProxy.send('users.findOne', { id, jwt: { token } }).pipe(catchRpcException);
+  }
+
+  @Post()
+  public create(@Body() body: AbstractBody, @Headers('authorization') token: string) {
+    console.log({ jwt: { token }, body });
+
+    return this.authProxy.send('users.create', { jwt: { token }, body }).pipe(catchRpcException);
   }
 
   @Patch('/:id/password')

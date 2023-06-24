@@ -14,8 +14,8 @@ export class AuthController {
   }
 
   @Post('/register')
-  public register(@Body() body: AbstractBody, @Headers('authorization') token: string) {
-    return this.authProxy.send('auth.register', { jwt: { token }, body }).pipe(catchRpcException);
+  public register(@Body() body: AbstractBody) {
+    return this.authProxy.send('auth.register', body).pipe(catchRpcException);
   }
 
   @Post('/login')
