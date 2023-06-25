@@ -15,7 +15,7 @@ export class UsersController {
 
   @Get('/:id')
   public findOne(@Param('id', new ParseUUIDPipe()) id: string, @Headers('authorization') token: string) {
-    return this.authProxy.send('users.findOne', { id, jwt: { token } }).pipe(catchRpcException);
+    return this.authProxy.send('users.findOne', { id, token }).pipe(catchRpcException);
   }
 
   @Post()

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { GEARS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
@@ -14,13 +14,13 @@ export class RidesController {
   }
 
   @Get('self')
-  public findAllSelf() {
-    return this.gearsProxy.send('rides.self.findAll', {}).pipe(catchRpcException);
+  public findAllSelf(@Headers('authorization') token: string) {
+    return this.gearsProxy.send('rides.self.findAll', { token }).pipe(catchRpcException);
   }
 
   @Get('current')
-  public findSelfCurrent(@Param('id', ParseUUIDPipe) id: string) {
-    return this.gearsProxy.send('rides.self.findCurrent', id).pipe(catchRpcException);
+  public findSelfCurrent(@Headers('authorization') token: string) {
+    return this.gearsProxy.send('rides.self.findCurrent', { token }).pipe(catchRpcException);
   }
 
   @Get(':id')
