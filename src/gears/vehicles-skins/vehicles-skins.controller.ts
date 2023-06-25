@@ -30,8 +30,6 @@ export class VehiclesSkinsController {
 
   @Get(':id')
   public findOne(@Param('id', ParseUUIDPipe) id: string) {
-    console.log(id);
-
     return this.gearsProxy.send('vehiclesSkins.findOne', id).pipe(catchRpcException);
   }
 

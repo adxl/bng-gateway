@@ -10,7 +10,7 @@ export class AuthController {
 
   @Get('/me')
   public me(@Headers('authorization') token: string) {
-    return this.authProxy.send('auth.me', { token }).pipe(catchRpcException);
+    return this.authProxy.send('auth.me', { jwt: { token } }).pipe(catchRpcException);
   }
 
   @Post('/register')
