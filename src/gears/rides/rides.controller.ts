@@ -12,6 +12,17 @@ export class RidesController {
   public findAll() {
     return this.gearsProxy.send('rides.findAll', {}).pipe(catchRpcException);
   }
+
+  @Get('self')
+  public findAllSelf() {
+    return this.gearsProxy.send('rides.self.findAll', {}).pipe(catchRpcException);
+  }
+
+  @Get('current')
+  public findSelfCurrent(@Param('id', ParseUUIDPipe) id: string) {
+    return this.gearsProxy.send('rides.self.findCurrent', id).pipe(catchRpcException);
+  }
+
   @Get(':id')
   public findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.gearsProxy.send('rides.findOne', id).pipe(catchRpcException);

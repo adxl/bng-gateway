@@ -9,12 +9,8 @@ export class UsersController {
   public constructor(@Inject(AUTH_SERVICE) private readonly authProxy: ClientProxy) {}
 
   @Get('')
-  public findAll(/* @Headers('authorization') token: string*/) {
-    return this.authProxy
-      .send('users.findAll', {
-        /* token */
-      })
-      .pipe(catchRpcException);
+  public findAll(@Headers('authorization') token: string) {
+    return this.authProxy.send('users.findAll', { token }).pipe(catchRpcException);
   }
 
   @Get('/:id')
