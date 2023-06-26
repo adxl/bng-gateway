@@ -18,6 +18,11 @@ export class StationsController {
     return this.gearsProxy.send('stations.findOne', { id, token }).pipe(catchRpcException);
   }
 
+  @Get()
+  public findMany(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.gearsProxy.send('stations.findMany', { token, body }).pipe(catchRpcException);
+  }
+
   @Post()
   public create(@Headers('authorization') token: string, @Body() body: AbstractBody) {
     return this.gearsProxy.send('stations.create', { token, body }).pipe(catchRpcException);
