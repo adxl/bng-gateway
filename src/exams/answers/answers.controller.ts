@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { EXAMS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
@@ -9,22 +9,22 @@ export class AnswersController {
   public constructor(@Inject(EXAMS_SERVICE) private readonly answersProxy: ClientProxy) {}
 
   @Get(':id')
-  public findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.answersProxy.send('exams.findOne', id).pipe(catchRpcException);
+  public findOne(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.answersProxy.send('exams.findOne', { id, token }).pipe(catchRpcException);
   }
 
   @Post()
-  public create(@Body() body: AbstractBody) {
-    return this.answersProxy.send('exams.create', body).pipe(catchRpcException);
+  public create(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.answersProxy.send('exams.create', { token, body }).pipe(catchRpcException);
   }
 
   @Patch(':id')
-  public update(@Param('id', ParseUUIDPipe) id: string, @Body() body: AbstractBody) {
-    return this.answersProxy.send('exams.update', { id, body }).pipe(catchRpcException);
+  public update(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.answersProxy.send('exams.update', { id, token, body }).pipe(catchRpcException);
   }
 
   @Delete()
-  public remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.answersProxy.send('exams.remove', id).pipe(catchRpcException);
+  public remove(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.answersProxy.send('exams.remove', { id, token }).pipe(catchRpcException);
   }
 }

@@ -14,52 +14,32 @@ export class UsersController {
   }
 
   @Get('/:id')
-  public findOne(@Param('id', new ParseUUIDPipe()) id: string, @Headers('authorization') token: string) {
+  public findOne(@Headers('authorization') token: string, @Param('id', new ParseUUIDPipe()) id: string) {
     return this.authProxy.send('users.findOne', { id, token }).pipe(catchRpcException);
   }
 
   @Post()
-  public create(@Body() body: AbstractBody, @Headers('authorization') token: string) {
-    console.log({ jwt: { token }, body });
-
-    return this.authProxy.send('users.create', { jwt: { token }, body }).pipe(catchRpcException);
+  public create(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.authProxy.send('users.create', { token, body }).pipe(catchRpcException);
   }
 
   @Patch('/:id/password')
-  public updatePassword(@Body() body: AbstractBody, @Headers('authorization') token: string) {
-    return this.authProxy.send('users.updatePassword', {
-      oldPwd: body.oldPwd,
-      password: body.password,
-      jwt: { token },
-    });
+  public updatePassword(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.authProxy.send('users.updatePassword', { body, token }).pipe(catchRpcException);
   }
 
   @Patch('/:id/profile')
-  public updateProfile(@Body() body: AbstractBody, @Headers('authorization') token: string) {
-    return this.authProxy.send('users.updateProfile', {
-      firstName: body.firstName,
-      lastName: body.lastName,
-      jwt: { token },
-    });
+  public updateProfile(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.authProxy.send('users.updateProfile', { token, body }).pipe(catchRpcException);
   }
 
   @Patch('/:id/role')
-  public updateRole(
-    @Param('id', new ParseUUIDPipe()) id: string,
-    @Body() body: AbstractBody,
-    @Headers('authorization') token: string,
-  ) {
-    return this.authProxy
-      .send('users.updateRole', {
-        id: id,
-        role: body.role,
-        jwt: { token },
-      })
-      .pipe(catchRpcException);
+  public updateRole(@Param('id', new ParseUUIDPipe()) id: string, @Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.authProxy.send('users.updateRole', { id, body, token }).pipe(catchRpcException);
   }
 
   @Delete('/:id')
   public remove(@Param('id', new ParseUUIDPipe()) id: string, @Headers('authorization') token: string) {
-    return this.authProxy.send('users.remove', { id, jwt: { token } }).pipe(catchRpcException);
+    return this.authProxy.send('users.remove', { id, token }).pipe(catchRpcException);
   }
 }

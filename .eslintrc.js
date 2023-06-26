@@ -20,7 +20,7 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
-        "printWidth": 120
+        "printWidth": 150
       }
     ],
     '@typescript-eslint/interface-name-prefix': 'off',

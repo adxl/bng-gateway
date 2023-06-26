@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { EXAMS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
@@ -9,21 +9,21 @@ export class AttemptsController {
   public constructor(@Inject(EXAMS_SERVICE) private readonly attemptsProxy: ClientProxy) {}
 
   @Get()
-  public findActiveByType(@Param('id', ParseUUIDPipe) id: string) {
-    return this.attemptsProxy.send('attempts.findActiveByType', id).pipe(catchRpcException);
+  public findActiveByType(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.attemptsProxy.send('attempts.findActiveByType', { id, token }).pipe(catchRpcException);
   }
 
   @Get(':id')
-  public findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.attemptsProxy.send('attempts.findOne', id).pipe(catchRpcException);
+  public findOne(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.attemptsProxy.send('attempts.findOne', { id, token }).pipe(catchRpcException);
   }
 
   @Post()
-  public create(@Body() body: AbstractBody) {
-    return this.attemptsProxy.send('attempts.create', body).pipe(catchRpcException);
+  public create(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.attemptsProxy.send('attempts.create', { token, body }).pipe(catchRpcException);
   }
   @Patch(':id')
-  public update(@Param('id', ParseUUIDPipe) id: string, @Body() body: AbstractBody) {
-    return this.attemptsProxy.send('attempts.update', { id, body }).pipe(catchRpcException);
+  public update(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.attemptsProxy.send('attempts.update', { id, token, body }).pipe(catchRpcException);
   }
 }
