@@ -15,11 +15,11 @@ export class AuthController {
 
   @Post('/register')
   public register(@Body() body: AbstractBody) {
-    return this.authProxy.send('auth.register', body).pipe(catchRpcException);
+    return this.authProxy.send('auth.register', { body }).pipe(catchRpcException);
   }
 
   @Post('/login')
   public login(@Body() body: AbstractBody) {
-    return this.authProxy.send('auth.login', body).pipe(catchRpcException);
+    return this.authProxy.send('auth.login', { body }).pipe(catchRpcException);
   }
 }

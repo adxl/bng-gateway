@@ -14,22 +14,22 @@ export class VehiclesController {
   }
 
   @Get(':id')
-  public findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.gearsProxy.send('vehicles.findOne', id).pipe(catchRpcException);
+  public findOne(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.gearsProxy.send('vehicles.findOne', { id, token }).pipe(catchRpcException);
   }
 
   @Post()
-  public create(@Body() body: AbstractBody) {
-    return this.gearsProxy.send('vehicles.create', body).pipe(catchRpcException);
+  public create(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.gearsProxy.send('vehicles.create', { token, body }).pipe(catchRpcException);
   }
 
   @Patch(':id')
-  public update(@Param('id', ParseUUIDPipe) id: string, @Body() body: AbstractBody) {
-    return this.gearsProxy.send('vehicles.update', { id, body }).pipe(catchRpcException);
+  public update(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.gearsProxy.send('vehicles.update', { id, token, body }).pipe(catchRpcException);
   }
 
   @Delete(':id')
-  public remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.gearsProxy.send('vehicles.remove', id).pipe(catchRpcException);
+  public remove(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.gearsProxy.send('vehicles.remove', { id, token }).pipe(catchRpcException);
   }
 }

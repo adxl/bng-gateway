@@ -4,6 +4,7 @@ import {
   Delete,
   FileTypeValidator,
   Get,
+  Headers,
   Inject,
   Param,
   ParseFilePipe,
@@ -24,31 +25,30 @@ export class VehiclesSkinsController {
   public constructor(@Inject(GEARS_SERVICE) private readonly gearsProxy: ClientProxy) {}
 
   @Get()
-  public findAll() {
-    return this.gearsProxy.send('vehiclesSkins.findAll', {}).pipe(catchRpcException);
+  public findAll(@Headers('authorization') token: string) {
+    return this.gearsProxy.send('vehiclesSkins.findAll', { token }).pipe(catchRpcException);
   }
 
   @Get(':id')
-  public findOne(@Param('id', ParseUUIDPipe) id: string) {
-    console.log(id);
-
-    return this.gearsProxy.send('vehiclesSkins.findOne', id).pipe(catchRpcException);
+  public findOne(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.gearsProxy.send('vehiclesSkins.findOne', { id, token }).pipe(catchRpcException);
   }
 
   @Post()
-  public create(@Body() body: AbstractBody) {
-    return this.gearsProxy.send('vehiclesSkins.create', body).pipe(catchRpcException);
+  public create(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.gearsProxy.send('vehiclesSkins.create', { token, body }).pipe(catchRpcException);
   }
 
   @Patch(':id')
-  public update(@Param('id', ParseUUIDPipe) id: string, @Body() body: AbstractBody) {
-    return this.gearsProxy.send('vehiclesSkins.update', { id, body }).pipe(catchRpcException);
+  public update(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.gearsProxy.send('vehiclesSkins.update', { id, token, body }).pipe(catchRpcException);
   }
 
   @Patch(':id/file')
   @UseInterceptors(FileInterceptor('file'))
   public uploadFile(
     @Param('id', new ParseUUIDPipe()) id: string,
+    @Headers('authorization') token: string,
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: /(^image)(\/)(jpe?g|png)/g })],
@@ -56,11 +56,11 @@ export class VehiclesSkinsController {
     )
     file: Express.Multer.File,
   ) {
-    return this.gearsProxy.send('vehiclesSkins.uploadFile', { id, file }).pipe(catchRpcException);
+    return this.gearsProxy.send('vehiclesSkins.uploadFile', { id, token, file }).pipe(catchRpcException);
   }
 
   @Delete(':id')
-  public remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.gearsProxy.send('vehiclesSkins.remove', id).pipe(catchRpcException);
+  public remove(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.gearsProxy.send('vehiclesSkins.remove', { id, token }).pipe(catchRpcException);
   }
 }

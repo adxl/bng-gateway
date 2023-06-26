@@ -6,11 +6,7 @@ import { ClientProxy } from 'src/config/proxy.config';
 import { securityMiddleware } from 'src/middlewares/security.middleware';
 import { EventsWinnersModule } from 'src/events/events-winners/events-winners.module';
 @Module({
-  imports: [
-    ClientProxy(EVENTS_SERVICE, process.env.EVENTS_HOST || 'events-api-service', process.env.EVENTS_PORT),
-    EventsModule,
-    EventsWinnersModule,
-  ],
+  imports: [ClientProxy(EVENTS_SERVICE, process.env.EVENTS_HOST || 'events-api-service', process.env.EVENTS_PORT), EventsModule, EventsWinnersModule],
   controllers: [AppController],
 })
 export class AppModule {
