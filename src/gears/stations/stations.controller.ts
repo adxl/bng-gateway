@@ -13,12 +13,6 @@ export class StationsController {
     return this.gearsProxy.send('stations.findAll', { token }).pipe(catchRpcException);
   }
 
-  @Get('/many')
-  public findMany(@Headers('authorization') token: string, @Body() body: AbstractBody) {
-    console.log(body);
-    return this.gearsProxy.send('stations.findMany', { token, ids: body.ids || [] }).pipe(catchRpcException);
-  }
-
   @Get(':id')
   public findOne(@Headers('authorization') token: string, @Param('id', ParseUUIDPipe) id: string) {
     return this.gearsProxy.send('stations.findOne', { id, token }).pipe(catchRpcException);
@@ -29,9 +23,19 @@ export class StationsController {
     return this.gearsProxy.send('stations.create', { token, body }).pipe(catchRpcException);
   }
 
+  @Post('many')
+  public findMany(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.gearsProxy.send('stations.findMany', { token, ids: body.ids || [] }).pipe(catchRpcException);
+  }
+
   @Patch(':id')
   public update(@Headers('authorization') token: string, @Param('id', ParseUUIDPipe) id: string, @Body() body: AbstractBody) {
     return this.gearsProxy.send('stations.update', { id, token, body }).pipe(catchRpcException);
+  }
+
+  @Patch(':id/event')
+  public updateEvent(@Headers('authorization') token: string, @Param('id', ParseUUIDPipe) id: string, @Body() body: AbstractBody) {
+    return this.gearsProxy.send('stations.event.update', { id, token, body }).pipe(catchRpcException);
   }
 
   @Delete(':id')
