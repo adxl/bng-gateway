@@ -13,9 +13,8 @@ export class UsersController {
     return this.authProxy.send('users.findAll', { token }).pipe(catchRpcException);
   }
 
-  @Get('many')
+  @Post('many')
   public findMany(@Headers('authorization') token: string, @Body() body: AbstractBody) {
-    console.log(body);
     return this.authProxy.send('users.findMany', { token, ids: body.ids || [] }).pipe(catchRpcException);
   }
 
