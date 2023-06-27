@@ -13,14 +13,15 @@ export class StationsController {
     return this.gearsProxy.send('stations.findAll', { token }).pipe(catchRpcException);
   }
 
+  @Get('/many')
+  public findMany(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    console.log(body);
+    return this.gearsProxy.send('stations.findMany', { token, ids: body.ids || [] }).pipe(catchRpcException);
+  }
+
   @Get(':id')
   public findOne(@Headers('authorization') token: string, @Param('id', ParseUUIDPipe) id: string) {
     return this.gearsProxy.send('stations.findOne', { id, token }).pipe(catchRpcException);
-  }
-
-  @Get()
-  public findMany(@Headers('authorization') token: string, @Body() body: AbstractBody) {
-    return this.gearsProxy.send('stations.findMany', { token, body }).pipe(catchRpcException);
   }
 
   @Post()

@@ -13,6 +13,12 @@ export class UsersController {
     return this.authProxy.send('users.findAll', { token }).pipe(catchRpcException);
   }
 
+  @Get('many')
+  public findMany(@Headers('authorization') token: string, @Body() body: AbstractBody) {
+    console.log(body);
+    return this.authProxy.send('users.findMany', { token, ids: body.ids || [] }).pipe(catchRpcException);
+  }
+
   @Get('/:id')
   public findOne(@Headers('authorization') token: string, @Param('id', new ParseUUIDPipe()) id: string) {
     return this.authProxy.send('users.findOne', { id, token }).pipe(catchRpcException);
