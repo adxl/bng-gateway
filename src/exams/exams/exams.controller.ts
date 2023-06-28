@@ -13,9 +13,19 @@ export class ExamsController {
     return this.examsProxy.send('exams.findAll', { token }).pipe(catchRpcException);
   }
 
+  @Get('user')
+  public findAllUser(@Headers('authorization') token: string) {
+    return this.examsProxy.send('exams.findAllUser', { token }).pipe(catchRpcException);
+  }
+
   @Get(':id')
   public findOne(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
     return this.examsProxy.send('exams.findOne', { id, token }).pipe(catchRpcException);
+  }
+
+  @Get('public/:id')
+  public findOnePublic(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.examsProxy.send('exams.findOnePublic', { id, token }).pipe(catchRpcException);
   }
 
   @Post()

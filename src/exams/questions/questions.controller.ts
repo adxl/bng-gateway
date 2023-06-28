@@ -8,9 +8,9 @@ import { AbstractBody } from 'src/types';
 export class QuestionsController {
   public constructor(@Inject(EXAMS_SERVICE) private readonly questionsProxy: ClientProxy) {}
 
-  @Get()
-  public findOne(@Param('questions.id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
-    return this.questionsProxy.send('create', { id, token }).pipe(catchRpcException);
+  @Get(':id')
+  public findOne(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.questionsProxy.send('questions.findOne', { id, token }).pipe(catchRpcException);
   }
 
   @Post()
