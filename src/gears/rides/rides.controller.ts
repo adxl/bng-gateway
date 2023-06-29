@@ -38,6 +38,12 @@ export class RidesController {
     return this.gearsProxy.send('rides.info.update', { id, token, body }).pipe(catchRpcException);
   }
 
+  @Get(':id/end/:stationId')
+  public endRide(@Param('id', ParseUUIDPipe) id: string, @Param('stationId', ParseUUIDPipe) stationId: string) {
+    const body = { endStation: { id: stationId } };
+    return this.gearsProxy.send('rides.info.update', { id, body }).pipe(catchRpcException);
+  }
+
   @Patch(':id/review')
   public updateReview(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string, @Body() body: AbstractBody) {
     return this.gearsProxy.send('rides.review.update', { id, token, body }).pipe(catchRpcException);
