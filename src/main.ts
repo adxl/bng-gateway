@@ -10,7 +10,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: [/localhost/, /\.vercel\.app$/, /www.drivequeen.eu/],
+    origin: [/localhost/, /http:\/\/192.168.1.*:8100/, /\.vercel\.app$/, /www.drivequeen.eu/],
   });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
