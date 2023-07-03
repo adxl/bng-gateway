@@ -48,6 +48,11 @@ export class UsersController {
     return this.authProxy.send('users.updateRole', { id, body, token }).pipe(catchRpcException);
   }
 
+  @Patch('/:id/caps')
+  public updateCaps(@Param('id', new ParseUUIDPipe()) id: string, @Headers('authorization') token: string, @Body() body: AbstractBody) {
+    return this.authProxy.send('users.updateCaps', { id, body, token }).pipe(catchRpcException);
+  }
+
   @Delete('/:id')
   public remove(@Param('id', new ParseUUIDPipe()) id: string, @Headers('authorization') token: string) {
     return this.authProxy.send('users.remove', { id, token }).pipe(catchRpcException);
