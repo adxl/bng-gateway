@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Headers, Inject, Param, ParseUUIDPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { GEARS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 import { AbstractBody } from 'src/types';
 
-@Controller('gear/auctions')
+@Controller('gears/auctions')
 export class AuctionsController {
   public constructor(@Inject(GEARS_SERVICE) private readonly gearsProxy: ClientProxy) {}
 
@@ -23,9 +23,9 @@ export class AuctionsController {
     return this.gearsProxy.send('auctions.create', { token, body }).pipe(catchRpcException);
   }
 
-  @Post(':id/click')
-  public click(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string, @Body() body: AbstractBody) {
-    return this.gearsProxy.send('auctions.click', { id, token, body }).pipe(catchRpcException);
+  @Patch(':id/click')
+  public click(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
+    return this.gearsProxy.send('auctions.click', { id, token }).pipe(catchRpcException);
   }
 
   @Delete('/:id')
