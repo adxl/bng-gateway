@@ -10,7 +10,7 @@ services:
     networks:
       - bng
     deploy:
-      replicas: 3
+      replicas: 1
 
 networks:
   bng:
