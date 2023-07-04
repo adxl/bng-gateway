@@ -9,11 +9,6 @@ export class AuctionsController {
   public constructor(@Inject(GEARS_SERVICE) private readonly gearsProxy: ClientProxy) {}
 
   @Get()
-  public findAll(@Headers('authorization') token: string) {
-    return this.gearsProxy.send('auctions.findAll', { token }).pipe(catchRpcException);
-  }
-
-  @Get('active')
   public findActive(@Headers('authorization') token: string) {
     return this.gearsProxy.send('auctions.findActive', { token }).pipe(catchRpcException);
   }
