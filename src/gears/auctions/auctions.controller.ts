@@ -13,11 +13,6 @@ export class AuctionsController {
     return this.gearsProxy.send('auctions.findActive', { token }).pipe(catchRpcException);
   }
 
-  @Get(':id')
-  public findOne(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
-    return this.gearsProxy.send('auctions.findOne', { id, token }).pipe(catchRpcException);
-  }
-
   @Post()
   public create(@Headers('authorization') token: string, @Body() body: AbstractBody) {
     return this.gearsProxy.send('auctions.create', { token, body }).pipe(catchRpcException);
