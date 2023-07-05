@@ -42,10 +42,11 @@ export class AuctionGateway implements OnGatewayInit, OnGatewayConnection, OnGat
   @SubscribeMessage('click')
   async handleClick(client: Socket, data: { room: string; token: string }) {
     if (!(await this.server.in(data.room).fetchSockets()).find((socket) => socket.id === client.id)) return;
-    if (this.timeout) clearTimeout(this.timeout);
 
     const clickResponse = this.gearsProxy.send('auctions.click', { id: data.room, token: data.token }).pipe(catchRpcException);
     await firstValueFrom(clickResponse);
+
+    if (this.timeout) clearTimeout(this.timeout);
 
     const auctionResponse = this.gearsProxy.send('auctions.findOne', { id: data.room, token: data.token }).pipe(catchRpcException);
     const auctionData = await firstValueFrom(auctionResponse);
