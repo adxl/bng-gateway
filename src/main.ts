@@ -9,6 +9,7 @@ async function bootstrap() {
     logger: ['error', 'warn', 'debug', 'log'] as LogLevel[],
   });
 
+  //
   app.enableCors({
     origin: [/localhost/, /http:\/\/192.168.1.*:8100/, /\.vercel\.app$/, /www.drivequeen.eu/],
   });

@@ -41,7 +41,7 @@ export class RidesController {
   @Get(':id/end/:stationId')
   public endRide(@Param('id', ParseUUIDPipe) id: string, @Param('stationId', ParseUUIDPipe) stationId: string) {
     const body = { endStation: { id: stationId } };
-    return this.gearsProxy.send('rides.info.update', { id, body }).pipe(catchRpcException);
+    return this.gearsProxy.send('rides.end', { id, body }).pipe(catchRpcException);
   }
 
   @Patch(':id/review')
