@@ -8,6 +8,7 @@ services:
       - 8000:8000
     environment:
       STAGE: production
+      INTERNAL_BASIC: '@INTERNAL_BASIC@'
     networks:
       - bng
     deploy:

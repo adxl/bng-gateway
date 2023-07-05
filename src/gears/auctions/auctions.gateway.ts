@@ -1,31 +1,19 @@
 import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { firstValueFrom } from 'rxjs';
 import { Server, Socket } from 'socket.io';
 import { GEARS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
 @WebSocketGateway(8000, { namespace: 'auctions' })
-export class AuctionGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+export class AuctionGateway {
   public constructor(@Inject(GEARS_SERVICE) private readonly gearsProxy: ClientProxy) {}
 
   private timeout: NodeJS.Timeout;
 
   @WebSocketServer()
   server: Server;
-
-  handleConnection() {
-    console.log('connect');
-  }
-
-  handleDisconnect() {
-    console.log('disconnect');
-  }
-
-  afterInit() {
-    console.log('init');
-  }
 
   @SubscribeMessage('joinRoom')
   handleJoinRoom(client: Socket, data: { room: string }) {
@@ -48,7 +36,7 @@ export class AuctionGateway implements OnGatewayInit, OnGatewayConnection, OnGat
 
     if (this.timeout) clearTimeout(this.timeout);
 
-    const auctionResponse = this.gearsProxy.send('auctions.findOne', { id: data.room, token: data.token }).pipe(catchRpcException);
+    const auctionResponse = this.gearsProxy.send('auctions.findActive', { id: data.room, token: data.token }).pipe(catchRpcException);
     const auctionData = await firstValueFrom(auctionResponse);
 
     this.server.in(data.room).emit('updateData', auctionData);
