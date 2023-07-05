@@ -44,8 +44,6 @@ export class AuctionGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     if (!(await this.server.in(data.room).fetchSockets()).find((socket) => socket.id === client.id)) return;
     if (this.timeout) clearTimeout(this.timeout);
 
-    console.log('click');
-
     const clickResponse = this.gearsProxy.send('auctions.click', { id: data.room, token: data.token }).pipe(catchRpcException);
     await firstValueFrom(clickResponse);
 
@@ -55,7 +53,6 @@ export class AuctionGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     this.server.in(data.room).emit('updateData', auctionData);
 
     this.timeout = setTimeout(async () => {
-      console.log('close');
       this.server.in(data.room).emit('auctionEnd', "L'enchère est terminée !");
 
       const closeResponse = this.gearsProxy
