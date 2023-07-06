@@ -6,7 +6,7 @@ import { Server, Socket } from 'socket.io';
 import { GEARS_SERVICE } from 'src/constants';
 import { catchRpcException } from 'src/exceptions/exceptions.pipe';
 
-@WebSocketGateway(8000, { namespace: 'auctions' })
+@WebSocketGateway(7000, { namespace: 'auctions' })
 export class AuctionGateway {
   public constructor(@Inject(GEARS_SERVICE) private readonly gearsProxy: ClientProxy) {}
 

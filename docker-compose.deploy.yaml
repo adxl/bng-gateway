@@ -5,14 +5,14 @@ services:
     image: adxl/bng-gateway:latest
     ports:
       - 8080:9000
-      - 8000:8000
+      - 7000:7000
     environment:
       STAGE: production
       INTERNAL_BASIC: '@INTERNAL_BASIC@'
     networks:
       - bng
     deploy:
-      replicas: 3
+      replicas: 1
 
 networks:
   bng:
