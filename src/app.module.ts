@@ -5,9 +5,10 @@ import { AppModule as AuthModule } from './auth/app.module';
 import { AppModule as ExamsModule } from './exams/app.module';
 import { AppModule as GearsModule } from './gears/app.module';
 import { securityMiddleware } from './middlewares/security.middleware';
+import { AuctionsModule } from './gears/auctions/auctions.module';
 
 @Module({
-  imports: [AuthModule, ExamsModule, EventsModule, GearsModule],
+  imports: [AuthModule, ExamsModule, EventsModule, GearsModule, AuctionsModule],
   controllers: [AppController],
 })
 export class AppModule {

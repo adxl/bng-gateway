@@ -12,12 +12,6 @@ export class AttemptsController {
   public findAllEnded(@Headers('authorization') token: string) {
     return this.attemptsProxy.send('attempts.findAllEnded', { token }).pipe(catchRpcException);
   }
-
-  @Get(':id')
-  public findOne(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
-    return this.attemptsProxy.send('attempts.findOne', { id, token }).pipe(catchRpcException);
-  }
-
   @Get()
   public findActiveByType(@Param('id', ParseUUIDPipe) id: string, @Headers('authorization') token: string) {
     return this.attemptsProxy.send('attempts.findActiveByType', { id, token }).pipe(catchRpcException);

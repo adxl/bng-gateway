@@ -62,6 +62,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup
+        run: |
+          sed -i 's|@INTERNAL_BASIC@|${{ secrets.INTERNAL_BASIC }}|g' ./docker-compose.deploy.yaml
+
       - name: Config
         uses: appleboy/scp-action@v0.1.4
         with:
