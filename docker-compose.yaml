@@ -7,7 +7,7 @@ services:
       target: development
     ports:
       - 9000:9000
-      - 8000:8000
+      - 7000:7000
     env_file: .env
     volumes:
       - .:/home/node
